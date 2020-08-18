@@ -4,13 +4,35 @@
     overflow: scroll;
     color: #6a5d5d;
     background-color: white;
+    font-size: 12px;
 }
 
-.table tr {
-    display: flex;
-    justify-content: space-between;
+.table td:not(:first-child) {
+    text-align: right;
+}
+
+.table th{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    padding-bottom: 5px;
+    background-color: white;
+}
+
+.table td:first-child{
+    width: 150px;
+}
+
+.table th:first-child{
+    text-align: left;
 }
 
 .table td {
     padding: 0.5rem;
 }
+
+@media (max-width: 990px) {
+    .table td:first-child{
+        width: 100%;
+    }
+  }

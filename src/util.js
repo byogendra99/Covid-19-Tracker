@@ -1,6 +1,6 @@
 import React from "react";
 import numeral from "numeral";
-import { Circle, Popup } from "react-leaflet";
+import { Circle, Popup, Tooltip } from "react-leaflet";
 
 const casesTypeColors = {
     cases: {
@@ -23,8 +23,20 @@ export const sortData = data => {
     return sortedData.sort((a, b) => a.cases > b.cases ? -1 : 1);
 };
 
-export const prettyPrintStat = (stat) =>
-    stat ? `+${numeral(stat).format("0.0a")}` : "+0";
+export const searchTable = (str, arr) => {
+    const reg = RegExp(`.*${str.toLowerCase().split('').join('.*')}.*`)
+
+    return arr.filter((item) => {
+        if (item.country.toLowerCase().match(reg)) {
+            return item;
+        }
+    });
+
+}
+
+export const prettyPrintStat = (stat) => stat ? `+${numeral(stat).format("0.0a")}` : "+0";
+
+export const prettyPrintStat2 = (stat) => stat ? `${numeral(stat).format("0.0a")}` : "+0";
 
 export const showDataOnMap = (data, casesType = "cases") =>
     data.map((country) => (
@@ -37,7 +49,7 @@ export const showDataOnMap = (data, casesType = "cases") =>
                 Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier
             }
         >
-            <Popup>
+            <Tooltip>
                 <div className="info-container">
                     <div
                         className="info-flag"
@@ -54,6 +66,6 @@ export const showDataOnMap = (data, casesType = "cases") =>
                         Deaths: {numeral(country.deaths).format("0,0")}
                     </div>
                 </div>
-            </Popup>
+            </Tooltip>
         </Circle>
     ));
